@@ -22,7 +22,7 @@ private:
 
 	// 키 입력 매핑용 함수.
 	void SetupInputMapping();
+	void MouseX(float value);
 	void MouseY(float value);
-	void MouseY(float value)
 	
 };

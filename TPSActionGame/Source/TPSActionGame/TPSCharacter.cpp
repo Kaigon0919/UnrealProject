@@ -43,6 +43,7 @@ void ATPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ATPSCharacter::InputMoveX);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATPSCharacter::InputMoveY);
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed,this, &Super::Jump);
 }
 
 void ATPSCharacter::InputMoveX(const float value)

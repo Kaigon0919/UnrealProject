@@ -13,5 +13,7 @@ UCLASS()
 class TPSACTIONGAME_API ATPSActionGameGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	ATPSActionGameGameModeBase();
 	
 };

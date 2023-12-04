@@ -3,3 +3,6 @@
 
 #include "TPSActionGameGameModeBase.h"
 
+ATPSActionGameGameModeBase::ATPSActionGameGameModeBase()
+{
+}

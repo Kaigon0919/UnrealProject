@@ -41,17 +41,13 @@ void ATPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &ATPSCharacter::InputMoveX);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ATPSCharacter::InputMoveY);
+	PlayerInputComponent->BindAxis("MoveFoward", this, &ATPSCharacter::InputMoveY);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ATPSCharacter::InputMoveX);
+
 }
 
 void ATPSCharacter::InputMoveX(const float value)
 {
-	if (value == 0)
-	{
-		return;
-	}
-
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
@@ -60,11 +56,6 @@ void ATPSCharacter::InputMoveX(const float value)
 
 void ATPSCharacter::InputMoveY(const float value)
 {
-	if (value == 0)
-	{
-		return;
-	}
-
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);

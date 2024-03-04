@@ -38,17 +38,17 @@ AKGCharacterBase::AKGCharacterBase()
 	meshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	meshComponent->SetCollisionProfileName(TEXT("CharacterMesh"));
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMeshObjectRef(TEXT("/Script/Engine.SkeletalMesh'/Game/InfinityBladeWarriors/Character/CompleteCharacters/SK_CharM_Golden.SK_CharM_Golden'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMeshObjectRef(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (nullptr != skeletalMeshObjectRef.Object)
 	{
 		meshComponent->SetSkeletalMesh(skeletalMeshObjectRef.Object);
 	}
 
-	/*static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT(""));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT("/Game/KGGame/Animation/ABP_KG_Character.ABP_KG_Character_C"));
 	if (nullptr != animInstaceRef.Class)
 	{
 		meshComponent->SetAnimInstanceClass(animInstaceRef.Class);
-	}*/
+	}
 }
 
 // Called when the game starts or when spawned

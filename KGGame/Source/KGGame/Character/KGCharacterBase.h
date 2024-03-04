@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -33,7 +33,7 @@ protected:
 	TObjectPtr<class UAnimMontage> comboMontage; 
 	int32 currentComboIdx = 0;
 
-protected: // TODO.CharacterBase¿¡ ³Ö°í °øÅëÀ¸·Î ¾µ ÇÊ¿ä°¡ ÀÖÀ»±î? ÀÏ´Ü CharacterBase¿¡ µÎ°í »óÈ²º¸°í ÇÊ¿äÇÑ°÷ÀÌ ÇÑ°÷ÀÌ¸é ±×°÷¿¡¼­¸¸ Ã³¸®ÇÏµµ·Ï ¼öÁ¤ÇÑ´Ù.
+protected: // TODO.CharacterBaseì— ë„£ê³  ê³µí†µìœ¼ë¡œ ì“¸ í•„ìš”ê°€ ìˆì„ê¹Œ? ì¼ë‹¨ CharacterBaseì— ë‘ê³  ìƒí™©ë³´ê³  í•„ìš”í•œê³³ì´ í•œê³³ì´ë©´ ê·¸ê³³ì—ì„œë§Œ ì²˜ë¦¬í•˜ë„ë¡ ìˆ˜ì •í•œë‹¤.
 	void ProcessComboCommand();
 	bool IsComboAttackable();
 

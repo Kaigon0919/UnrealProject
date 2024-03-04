@@ -3,18 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
-#include "KGGameMode.generated.h"
+#include "GameFramework/PlayerController.h"
+#include "KGPlayerController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class KGGAME_API AKGGameMode : public AGameModeBase
+class KGGAME_API AKGPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
-	AKGGameMode();
-
 	virtual void BeginPlay() override;
 };

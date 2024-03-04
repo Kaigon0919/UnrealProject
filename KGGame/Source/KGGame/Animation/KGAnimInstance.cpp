@@ -34,3 +34,13 @@ void UKGAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		isJumping = (isFalling & (velocity.Z > jumpingThreshould));
 	}
 }
+
+void UKGAnimInstance::AnimNotify_SaveAttack()
+{
+	saveAttackDelegate.Broadcast();
+}
+
+void UKGAnimInstance::AnimNotify_ResetCombo()
+{
+	resetComboDelegate.Broadcast();
+}

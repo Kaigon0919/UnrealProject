@@ -31,7 +31,7 @@ private: // Camera.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCameraComponent> cameraComponent;
 
-private:
+private: // Input.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputMappingContext> inputMappingContext;
 
@@ -44,7 +44,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> lookAction;
 
-private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> attackAction;
+
+private: // Input Action Function.
 	void Move(const FInputActionValue& value);
 	void Look(const FInputActionValue& value);
+	void Attack();
 };

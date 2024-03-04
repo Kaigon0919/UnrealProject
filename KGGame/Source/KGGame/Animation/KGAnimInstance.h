@@ -6,9 +6,9 @@
 #include "Animation/AnimInstance.h"
 #include "KGAnimInstance.generated.h"
 
-/**
- * 
- */
+DECLARE_MULTICAST_DELEGATE(FOnSaveAttackDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnResetComboDelegate);
+
 UCLASS()
 class KGGAME_API UKGAnimInstance : public UAnimInstance
 {
@@ -49,4 +49,13 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = "true"))
 	uint8 isJumping : 1;
 
+public:
+	FOnSaveAttackDelegate saveAttackDelegate;
+	FOnResetComboDelegate resetComboDelegate;
+
+private:
+	UFUNCTION()
+	void AnimNotify_SaveAttack();
+	UFUNCTION()
+	void AnimNotify_ResetCombo();
 };

@@ -42,6 +42,11 @@ AKGCharacterPlayer::AKGCharacterPlayer()
 	{
 		lookAction = inputActionLockRef.Object;
 	}
+	static ConstructorHelpers::FObjectFinder<UInputAction> inputActionAttackRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Attack.Attack'"));
+	if (nullptr != inputActionAttackRef.Object)
+	{
+		attackAction = inputActionAttackRef.Object;
+	}
 }
 
 void AKGCharacterPlayer::BeginPlay()
@@ -66,6 +71,7 @@ void AKGCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	enhancedInput->BindAction(jumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 	enhancedInput->BindAction(moveAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Move);
 	enhancedInput->BindAction(lookAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Look);
+	enhancedInput->BindAction(attackAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Attack);
 
 }
 
@@ -89,4 +95,9 @@ void AKGCharacterPlayer::Look(const FInputActionValue& value)
 
 	AddControllerYawInput(lookVector.X);
 	AddControllerPitchInput(lookVector.Y);
+}
+
+void AKGCharacterPlayer::Attack()
+{
+	Super::ProcessComboCommand();
 }

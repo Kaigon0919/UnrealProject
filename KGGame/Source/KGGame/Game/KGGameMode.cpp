@@ -5,7 +5,7 @@
 
 AKGGameMode::AKGGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APawn> pawnClassRef(TEXT("/Script/CoreUObject.Class'/Script/KGGame.KGCharacterPlayer'"));
+	static ConstructorHelpers::FClassFinder<APawn> pawnClassRef(TEXT("/Game/KGGame/Character/BP_KGCharacterPlayer.BP_KGCharacterPlayer_C"));
 	if (nullptr != pawnClassRef.Class)
 	{
 		this->DefaultPawnClass = pawnClassRef.Class;

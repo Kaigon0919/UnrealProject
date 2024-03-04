@@ -4,23 +4,47 @@
 
 #include "CoreMinimal.h"
 #include "Character/KGCharacterBase.h"
+#include "InputActionValue.h"
 #include "KGCharacterPlayer.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class KGGAME_API AKGCharacterPlayer : public AKGCharacterBase
 {
 	GENERATED_BODY()
-	
+
 public:
 	AKGCharacterPlayer();
 
-private:
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private: // Camera.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USpringArmComponent> springArmComponent;
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCameraComponent> cameraComponent;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputMappingContext> inputMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> jumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> moveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> lookAction;
+
+private:
+	void Move(const FInputActionValue& value);
+	void Look(const FInputActionValue& value);
 };

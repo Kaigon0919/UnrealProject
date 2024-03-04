@@ -13,7 +13,7 @@ AKGCharacterPlayer::AKGCharacterPlayer()
 	springArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("PlayerCameraSpringArm"));
 	springArmComponent->SetupAttachment(RootComponent);
 	//springArmComponent->SetUsingAbsoluteRotation(false);
-	//springArmComponent->bDoCollisionTest = false;
+	springArmComponent->bDoCollisionTest = true;
 	springArmComponent->TargetArmLength = 400.0f;
 	springArmComponent->bUsePawnControlRotation = true;
 

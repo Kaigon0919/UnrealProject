@@ -13,9 +13,9 @@ AKGCharacterBase::AKGCharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Pawn Rotate Setting.
-	this->bUseControllerRotationPitch = false;
 	this->bUseControllerRotationRoll = false;
 	this->bUseControllerRotationYaw = false;
+	this->bUseControllerRotationPitch = false;
 
 	// Collision Setting.
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
@@ -23,6 +23,7 @@ AKGCharacterBase::AKGCharacterBase()
 
 	// Movement Setting.
 	UCharacterMovementComponent * const moveComponent = GetCharacterMovement();
+	moveComponent->bUseControllerDesiredRotation = true;
 	moveComponent->bOrientRotationToMovement = true;
 	moveComponent->RotationRate = FRotator(0.0f, 500.f, 0.f);
 	moveComponent->JumpZVelocity = 700.0f;

@@ -2,11 +2,13 @@
 
 using UnrealBuildTool;
 
-public class TPSActionGame : ModuleRules
+public class KGGame : ModuleRules
 {
-	public TPSActionGame(ReadOnlyTargetRules Target) : base(Target)
+	public KGGame(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+		PublicIncludePaths.AddRange(new string[] { "KGGame" });
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 

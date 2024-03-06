@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/KGAnimInstance.h"
+#include "Status/KGCharacterStatusComponent.h"
 
 // Sets default values
 AKGCharacterBase::AKGCharacterBase()
@@ -49,6 +50,9 @@ AKGCharacterBase::AKGCharacterBase()
 	{
 		meshComponent->SetAnimInstanceClass(animInstaceRef.Class);
 	}
+
+	// Status Init.
+	InitStatusComponent();
 }
 
 void AKGCharacterBase::PostInitializeComponents()
@@ -168,5 +172,11 @@ void AKGCharacterBase::OnSaveAttack()
 void AKGCharacterBase::OnResetAttack()
 {
 	isSavableAttack = false;
+}
+
+void AKGCharacterBase::InitStatusComponent()
+{
+	UE_LOG(LogTemp, Log, TEXT("AKGCharacterBase::InitStatusComponent"));
+	statusComponent = CreateDefaultSubobject<UKGCharacterStatusComponent>("StatusComponent");
 }
 

@@ -51,4 +51,8 @@ private: // Input Action Function.
 	void Move(const FInputActionValue& value);
 	void Look(const FInputActionValue& value);
 	void Attack();
+
+protected:	
+	virtual void InitStatusComponent() override;
+
 };

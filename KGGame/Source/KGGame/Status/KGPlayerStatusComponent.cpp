@@ -5,15 +5,17 @@
 
 UKGPlayerStatusComponent::UKGPlayerStatusComponent() 
 	: Super()
-	, maxMp(1)
-	, currnetMp(maxMp)
+	, maxMp(100)
+	, currentMp(maxMp)
 {
 }
 
 void UKGPlayerStatusComponent::SetMaxMp( int32 value )
 {
+	maxMp = FMath::Clamp(value, 0, value);
 }
 
 void UKGPlayerStatusComponent::SetCurrentMp( int32 value )
 {
+	currentMp= FMath::Clamp(value, 0, maxMp);
 }

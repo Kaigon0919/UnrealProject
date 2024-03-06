@@ -4,9 +4,9 @@
 #include "KGCharacterStatusComponent.h"
 
 UKGCharacterStatusComponent::UKGCharacterStatusComponent()
-	:maxHp(1)
+	:maxHp(100)
 	,currentHp( maxHp )
-	,baseAttackPower(0)
+	,baseAttackPower(10)
 {
 }
 

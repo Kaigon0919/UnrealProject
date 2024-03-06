@@ -48,4 +48,12 @@ private:
 	void OnSaveAttack();
 	void OnResetAttack();
 	bool isSavableAttack;
+
+// Status.
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UKGCharacterStatusComponent> statusComponent;
+protected:
+	virtual void InitStatusComponent();
+	
 };

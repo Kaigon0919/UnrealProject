@@ -28,9 +28,13 @@ public:
 	float GetAttackPower()const { return baseAttackPower; }
 
 private:
+	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	int32 maxHp;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	int32 currentHp;
 
+	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	float baseAttackPower;
 	// 이후 필요하면 늘리도록한다.
 };

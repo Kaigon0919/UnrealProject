@@ -21,8 +21,11 @@ public:
 	void SetCurrentMp( int32 value );
 
 	int32 GetMaxMp()const { return maxMp; }
-	int32 GetCurrentMp()const { return currnetMp; }
+	int32 GetCurrentMp()const { return currentMp; }
 private:
+	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	int32 maxMp;
-	int32 currnetMp;
+	UPROPERTY(Transient, VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
+	int32 currentMp;
+
 };

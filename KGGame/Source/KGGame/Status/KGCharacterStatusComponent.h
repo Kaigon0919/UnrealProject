@@ -22,10 +22,14 @@ public:
 	void SetMaxHp( int32 value );
 	void SetCurrentHp( int32 value );
 	void  SetAttackPower( float value ) { baseAttackPower = value; }
+	void SetMaxMp(int32 value);
+	void SetCurrentMp(int32 value);
 
 	int32 GetMaxHp()const { return maxHp; }
 	int32 GetCurrentHp()const { return currentHp; }
 	float GetAttackPower()const { return baseAttackPower; }
+	int32 GetMaxMp()const { return maxMp; }
+	int32 GetCurrentMp()const { return currentMp; }
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
@@ -33,6 +37,12 @@ private:
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	int32 currentHp;
+
+	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
+	int32 maxMp;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
+	int32 currentMp;
 
 	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	float baseAttackPower;

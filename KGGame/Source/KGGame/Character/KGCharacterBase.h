@@ -53,7 +53,4 @@ private:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UKGCharacterStatusComponent> statusComponent;
-protected:
-	virtual void InitStatusComponent();
-	
 };

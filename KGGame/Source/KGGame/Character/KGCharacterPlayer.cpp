@@ -7,9 +7,8 @@
 #include "EnhancedInputComponent.h"
 #include "InputMappingContext.h"
 #include <EnhancedInputSubsystems.h>
-#include <Status/KGPlayerStatusComponent.h>
 
-AKGCharacterPlayer::AKGCharacterPlayer() : Super()
+AKGCharacterPlayer::AKGCharacterPlayer()
 {
 	springArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("PlayerCameraSpringArm"));
 	springArmComponent->SetupAttachment(RootComponent);
@@ -101,11 +100,4 @@ void AKGCharacterPlayer::Look(const FInputActionValue& value)
 void AKGCharacterPlayer::Attack()
 {
 	Super::ProcessComboCommand();
-}
-
-void AKGCharacterPlayer::InitStatusComponent()
-{
-	//Super::InitStatusComponent //CharacterBase와 다른 StatusComponent를 씁니다.
-	UE_LOG(LogTemp, Log, TEXT("Player InitStatusComponent"));
-	statusComponent = CreateDefaultSubobject<UKGPlayerStatusComponent>(TEXT("PlayerStatusComponent"));
 }

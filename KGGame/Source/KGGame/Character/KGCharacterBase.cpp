@@ -6,9 +6,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/KGAnimInstance.h"
 #include "Status/KGCharacterStatusComponent.h"
+#include "Collision/KGCollisionProfiles.h"
 
 // Sets default values
-AKGCharacterBase::AKGCharacterBase()
+AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -84,6 +85,13 @@ void AKGCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AKGCharacterBase::ActorEnable(const bool isEnable)
+{
+	SetActorTickEnabled(isEnable);
+	SetActorHiddenInGame(isEnable);
+	SetActorEnableCollision(isEnable);
 }
 
 void AKGCharacterBase::ProcessComboCommand()
@@ -172,3 +180,87 @@ void AKGCharacterBase::OnResetAttack()
 {
 	isSavableAttack = false;
 }
+
+float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	if (true == isDead)
+	{
+		return 0.0f;
+	}
+
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	int currentHp = statusComponent->GetCurrentHp();
+	currentHp -= DamageAmount;
+	if (currentHp <= 0)
+	{
+		OnDead();
+	}
+
+	statusComponent->SetCurrentHp(currentHp);
+
+	return DamageAmount;
+}
+
+void AKGCharacterBase::OnDead()
+{
+	isDead = true;
+
+	if (nullptr == deadMontage)
+	{
+		return;
+	}
+
+	UAnimInstance* animInstance = GetMesh()->GetAnimInstance();
+	if (nullptr == animInstance)
+	{
+		return;
+	}
+
+	// Dead 몽타주가 끝나면 waitDestroyTime만큼 대기했다가 사라지도록 처리.
+	FOnMontageEnded endDelegate = FOnMontageEnded::CreateLambda(
+		[&](UAnimMontage* montage, bool isProperlyEnded)
+		{
+			GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::OnDeadDestroy, waitDestroyTime, false);
+		});
+	animInstance->Montage_SetEndDelegate(endDelegate, deadMontage);
+}
+
+
+
+void AKGCharacterBase::OnDeadDestroy()
+{
+	GetWorldTimerManager().ClearTimer(waitDestroyTimerHandle);
+	this->ActorEnable(false);
+}
+
+void AKGCharacterBase::OnAttack()
+{
+	TArray<FHitResult> results;
+	FCollisionQueryParams params(SCENE_QUERY_STAT(Attack), false, this);
+
+	// 추후 캐릭별, 스킬별로 세팅할때 수정하도록 예정
+	const float attackRange = 150.0f;
+	const float attackRadius = 50.0f;
+	const FVector start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
+	const FVector end = start + GetActorForwardVector() * attackRange;
+	
+	const float attackDamage = statusComponent->GetAttackPower();
+
+	bool hitDetected = GetWorld()->SweepMultiByProfile(results, start, end, FQuat::Identity, TEXT("KGAction"), FCollisionShape::MakeSphere(attackRadius), params);
+	if (hitDetected)
+	{
+
+	}
+#if ENABLE_DRAW_DEBUG
+	FVector capsuleOrigin = start + (end - start) * 0.5f;
+	float capsuleHalfHeight = attackRange * 0.5f;
+	FColor drawColor = hitDetected ? FColor::Green : FColor::Red;
+
+	DrawDebugCapsule(GetWorld(), capsuleOrigin, capsuleHalfHeight, attackRadius, FRotationMatrix::MakeFromZ(GetActorForwardVector()).ToQuat(), drawColor, false, 2.0f);
+#endif
+}
+
+
+
+

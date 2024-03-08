@@ -39,13 +39,13 @@ AKGCharacterBase::AKGCharacterBase()
 	meshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	meshComponent->SetCollisionProfileName(TEXT("CharacterMesh"));
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMeshObjectRef(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
+	const static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMeshObjectRef(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (nullptr != skeletalMeshObjectRef.Object)
 	{
 		meshComponent->SetSkeletalMesh(skeletalMeshObjectRef.Object);
 	}
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT("/Game/KGGame/Animation/ABP_KG_Character.ABP_KG_Character_C"));
+	const static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT("/Game/KGGame/Animation/ABP_KG_Character.ABP_KG_Character_C"));
 	if (nullptr != animInstaceRef.Class)
 	{
 		meshComponent->SetAnimInstanceClass(animInstaceRef.Class);

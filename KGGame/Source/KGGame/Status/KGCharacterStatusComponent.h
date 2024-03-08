@@ -21,15 +21,15 @@ protected:
 public:
 	void SetMaxHp( int32 value );
 	void SetCurrentHp( int32 value );
-	void  SetAttackPower( float value ) { baseAttackPower = value; }
+	void SetAttackPower( float value ) { baseAttackPower = value; }
 	void SetMaxMp(int32 value);
 	void SetCurrentMp(int32 value);
 
-	int32 GetMaxHp()const { return maxHp; }
-	int32 GetCurrentHp()const { return currentHp; }
-	float GetAttackPower()const { return baseAttackPower; }
-	int32 GetMaxMp()const { return maxMp; }
-	int32 GetCurrentMp()const { return currentMp; }
+	const int32 GetMaxHp()const { return maxHp; }
+	const int32 GetCurrentHp()const { return currentHp; }
+	const float GetAttackPower()const { return baseAttackPower; }
+	const int32 GetMaxMp()const { return maxMp; }
+	const int32 GetCurrentMp()const { return currentMp; }
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))

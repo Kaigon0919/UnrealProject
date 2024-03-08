@@ -22,27 +22,31 @@ AKGCharacterPlayer::AKGCharacterPlayer()
 	cameraComponent->bUsePawnControlRotation = false;
 
 	// Input AessetLoad.
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext> inputContextRef(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/KGGame/Input/KGInputMapping.KGInputMapping'"));
+	const static ConstructorHelpers::FObjectFinder<UInputMappingContext> inputContextRef(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/KGGame/Input/KGInputMapping.KGInputMapping'"));
 	if (nullptr != inputContextRef.Object)
 	{
 		inputMappingContext = inputContextRef.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> inputActionMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Move.Move'"));
+
+	const static ConstructorHelpers::FObjectFinder<UInputAction> inputActionMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Move.Move'"));
 	if (nullptr != inputActionMoveRef.Object)
 	{
 		moveAction = inputActionMoveRef.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> inputActionJumpRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Jump.Jump'"));
+
+	const static ConstructorHelpers::FObjectFinder<UInputAction> inputActionJumpRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Jump.Jump'"));
 	if (nullptr != inputActionJumpRef.Object)
 	{
 		jumpAction = inputActionJumpRef.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> inputActionLockRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Look.Look'"));
+
+	const static ConstructorHelpers::FObjectFinder<UInputAction> inputActionLockRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Look.Look'"));
 	if (nullptr != inputActionLockRef.Object)
 	{
 		lookAction = inputActionLockRef.Object;
 	}
-	static ConstructorHelpers::FObjectFinder<UInputAction> inputActionAttackRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Attack.Attack'"));
+
+	const static ConstructorHelpers::FObjectFinder<UInputAction> inputActionAttackRef(TEXT("/Script/EnhancedInput.InputAction'/Game/KGGame/Input/Attack.Attack'"));
 	if (nullptr != inputActionAttackRef.Object)
 	{
 		attackAction = inputActionAttackRef.Object;

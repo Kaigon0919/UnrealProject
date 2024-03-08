@@ -5,13 +5,13 @@
 
 AKGGameMode::AKGGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APawn> pawnClassRef(TEXT("/Game/KGGame/Character/BP_KGCharacterPlayer.BP_KGCharacterPlayer_C"));
+	const static ConstructorHelpers::FClassFinder<APawn> pawnClassRef(TEXT("/Game/KGGame/Character/BP_KGCharacterPlayer.BP_KGCharacterPlayer_C"));
 	if (nullptr != pawnClassRef.Class)
 	{
 		this->DefaultPawnClass = pawnClassRef.Class;
 	}
 
-	static ConstructorHelpers::FClassFinder<APlayerController> controllerClassRef(TEXT("/Script/KGGame.KGPlayerController"));
+	const static ConstructorHelpers::FClassFinder<APlayerController> controllerClassRef(TEXT("/Script/KGGame.KGPlayerController"));
 	if (nullptr != controllerClassRef.Class)
 	{
 		this->PlayerControllerClass = controllerClassRef.Class;

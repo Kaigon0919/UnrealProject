@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/KGCharacterBase.h"
@@ -220,7 +220,7 @@ void AKGCharacterBase::OnDead()
 		return;
 	}
 
-	// Dead ¸ùÅ¸ÁÖ°¡ ³¡³ª¸é waitDestroyTime¸¸Å­ ´ë±âÇß´Ù°¡ »ç¶óÁöµµ·Ï Ã³¸®.
+	// Dead ëª½íƒ€ì£¼ê°€ ëë‚˜ë©´ waitDestroyTimeë§Œí¼ ëŒ€ê¸°í–ˆë‹¤ê°€ ì‚¬ë¼ì§€ë„ë¡ ì²˜ë¦¬.
 	FOnMontageEnded endDelegate = FOnMontageEnded::CreateLambda(
 		[&](UAnimMontage* montage, bool isProperlyEnded)
 		{
@@ -240,7 +240,7 @@ void AKGCharacterBase::OnAttack()
 	TArray<FHitResult> results;
 	FCollisionQueryParams params(SCENE_QUERY_STAT(Attack), false, this);
 
-	// ÃßÈÄ Ä³¸¯º°, ½ºÅ³º°·Î ¼¼ÆÃÇÒ¶§ ¼öÁ¤ÇÏµµ·Ï ¿¹Á¤
+	// ì¶”í›„ ìºë¦­ë³„, ìŠ¤í‚¬ë³„ë¡œ ì„¸íŒ…í• ë•Œ ìˆ˜ì •í•˜ë„ë¡ ì˜ˆì •
 	const float attackRange = 150.0f;
 	const float attackRadius = 50.0f;
 
@@ -266,7 +266,7 @@ void AKGCharacterBase::OnAttack()
 				continue;
 			}
 
-			check(1 == characterComponents.Num()); // AKGCharacterBase´Â ÇÏ³ªÀÌ¿©¾ß ÇÑ´Ù.
+			check(1 == characterComponents.Num()); // AKGCharacterBaseëŠ” í•˜ë‚˜ì´ì—¬ì•¼ í•œë‹¤.
 			const AKGCharacterBase* targetCharacterBaseComponent = Cast<AKGCharacterBase>(characterComponents[0]);
 
 			const KG::EAlliance targetAlliance = targetCharacterBaseComponent->GetAlliance();

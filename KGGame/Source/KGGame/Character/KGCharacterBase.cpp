@@ -7,6 +7,7 @@
 #include "Animation/KGAnimInstance.h"
 #include "Status/KGCharacterStatusComponent.h"
 #include "Collision/KGCollisionProfiles.h"
+#include "Engine/DamageEvents.h"
 
 // Sets default values
 AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
@@ -53,6 +54,8 @@ AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
 	}
 
 	statusComponent = CreateDefaultSubobject<UKGCharacterStatusComponent>("StatusComponent");
+
+	alliance = KG::EAlliance::None;
 }
 
 void AKGCharacterBase::PostInitializeComponents()
@@ -226,8 +229,6 @@ void AKGCharacterBase::OnDead()
 	animInstance->Montage_SetEndDelegate(endDelegate, deadMontage);
 }
 
-
-
 void AKGCharacterBase::OnDeadDestroy()
 {
 	GetWorldTimerManager().ClearTimer(waitDestroyTimerHandle);
@@ -242,15 +243,41 @@ void AKGCharacterBase::OnAttack()
 	// 추후 캐릭별, 스킬별로 세팅할때 수정하도록 예정
 	const float attackRange = 150.0f;
 	const float attackRadius = 50.0f;
+
 	const FVector start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
 	const FVector end = start + GetActorForwardVector() * attackRange;
 	
 	const float attackDamage = statusComponent->GetAttackPower();
 
-	bool hitDetected = GetWorld()->SweepMultiByProfile(results, start, end, FQuat::Identity, TEXT("KGAction"), FCollisionShape::MakeSphere(attackRadius), params);
+	const bool hitDetected = GetWorld()->SweepMultiByProfile(results, start, end, FQuat::Identity, TEXT("KGAction"), FCollisionShape::MakeSphere(attackRadius), params);
 	if (hitDetected)
 	{
+		const float damage = statusComponent->GetAttackPower();
+		const uint32 hitNum = results.Num();
+		for(uint32 i = 0; i < hitNum; ++i)
+		{
+			const FHitResult& resultTarget = results[i];
+			AActor* hittedActor = resultTarget.GetActor();
+			check(nullptr != hittedActor);
 
+			TArray<UActorComponent*> characterComponents = hittedActor->GetComponentsByClass(AKGCharacterBase::StaticClass());
+			if (true == characterComponents.IsEmpty())
+			{
+				continue;
+			}
+
+			check(1 == characterComponents.Num()); // AKGCharacterBase는 하나이여야 한다.
+			const AKGCharacterBase* targetCharacterBaseComponent = Cast<AKGCharacterBase>(characterComponents[0]);
+
+			const KG::EAlliance targetAlliance = targetCharacterBaseComponent->GetAlliance();
+			if (false == KG::IsEnemy(GetAlliance(), targetAlliance))
+			{
+				continue;
+			}
+
+			FDamageEvent damageEvent;
+			hittedActor->TakeDamage(damage, damageEvent, GetController(), this);
+		}
 	}
 #if ENABLE_DRAW_DEBUG
 	FVector capsuleOrigin = start + (end - start) * 0.5f;

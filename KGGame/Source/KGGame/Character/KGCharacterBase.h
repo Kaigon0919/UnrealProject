@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/KGAnimationAttackInterface.h"
+#include "KGAlliance.h"
+
 #include "KGCharacterBase.generated.h"
 
 UCLASS()
@@ -79,7 +81,12 @@ private:
 
 public:
 	bool IsDead() const { return isDead; }
-
-	// IKGAnimationAttackInterface을(를) 통해 상속됨
 	void OnAttack() override;
+
+// Alliance
+private:
+	KG::EAlliance alliance;
+public:
+	const KG::EAlliance GetAlliance() const { return alliance; }
+	void SetAlliance(KG::EAlliance value) { alliance = value; }
 };

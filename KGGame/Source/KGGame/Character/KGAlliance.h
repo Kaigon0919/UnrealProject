@@ -2,14 +2,12 @@
 
 #include "CoreMinimal.h"
 
-namespace KG
+UENUM()
+enum class EAlliance : uint8
 {
-	enum class EAlliance : uint8
-	{
-		None,
-		Player,
-		Enemy
-	};
-
-	bool IsEnemy(const EAlliance des, const EAlliance src);
+	None,
+	Player,
+	Enemy
 };
+
+bool IsEnemy(const EAlliance des, const EAlliance src);

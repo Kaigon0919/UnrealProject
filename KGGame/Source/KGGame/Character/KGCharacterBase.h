@@ -9,6 +9,7 @@
 
 #include "KGCharacterBase.generated.h"
 
+
 UCLASS()
 class KGGAME_API AKGCharacterBase : public ACharacter , public IKGAnimationAttackInterface
 {
@@ -85,8 +86,10 @@ public:
 
 // Alliance
 private:
-	KG::EAlliance alliance;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Alliance, Meta = (AllowPrivateAccess = "true"))
+	EAlliance alliance;
+
 public:
-	const KG::EAlliance GetAlliance() const { return alliance; }
-	void SetAlliance(KG::EAlliance value) { alliance = value; }
+	const EAlliance GetAlliance() const { return alliance; }
+	void SetAlliance(EAlliance value) { alliance = value; }
 };

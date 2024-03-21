@@ -47,7 +47,7 @@ AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
 		meshComponent->SetSkeletalMesh(skeletalMeshObjectRef.Object);
 	}
 
-	const static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT("/Game/KGGame/Animation/ABP_KG_Character.ABP_KG_Character_C"));
+	const static ConstructorHelpers::FClassFinder<UAnimInstance> animInstaceRef(TEXT("/Game/KGGame/Animation/Player/ABP_KG_Character.ABP_KG_Character_C"));
 	if (nullptr != animInstaceRef.Class)
 	{
 		meshComponent->SetAnimInstanceClass(animInstaceRef.Class);
@@ -55,7 +55,7 @@ AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
 
 	statusComponent = CreateDefaultSubobject<UKGCharacterStatusComponent>("StatusComponent");
 
-	alliance = KG::EAlliance::None;
+	alliance = EAlliance::None;
 }
 
 void AKGCharacterBase::PostInitializeComponents()
@@ -220,13 +220,12 @@ void AKGCharacterBase::OnDead()
 		return;
 	}
 
+	animInstance->Montage_Play(deadMontage, 1.0f);
 	// Dead 몽타주가 끝나면 waitDestroyTime만큼 대기했다가 사라지도록 처리.
-	FOnMontageEnded endDelegate = FOnMontageEnded::CreateLambda(
-		[&](UAnimMontage* montage, bool isProperlyEnded)
-		{
-			GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::OnDeadDestroy, waitDestroyTime, false);
-		});
-	animInstance->Montage_SetEndDelegate(endDelegate, deadMontage);
+	
+	float length = deadMontage->GetPlayLength();
+	GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::OnDeadDestroy, length + waitDestroyTime, false);
+
 }
 
 void AKGCharacterBase::OnDeadDestroy()
@@ -249,7 +248,7 @@ void AKGCharacterBase::OnAttack()
 	
 	const float attackDamage = statusComponent->GetAttackPower();
 
-	const bool hitDetected = GetWorld()->SweepMultiByProfile(results, start, end, FQuat::Identity, TEXT("KGAction"), FCollisionShape::MakeSphere(attackRadius), params);
+	const bool hitDetected = GetWorld()->SweepMultiByChannel(results, start, end, FQuat::Identity,KG_COLLISION_ACTION, FCollisionShape::MakeSphere(attackRadius), params);
 	if (hitDetected)
 	{
 		const float damage = statusComponent->GetAttackPower();
@@ -257,20 +256,14 @@ void AKGCharacterBase::OnAttack()
 		for(uint32 i = 0; i < hitNum; ++i)
 		{
 			const FHitResult& resultTarget = results[i];
-			AActor* hittedActor = resultTarget.GetActor();
-			check(nullptr != hittedActor);
-
-			TArray<UActorComponent*> characterComponents = hittedActor->GetComponentsByClass(AKGCharacterBase::StaticClass());
-			if (true == characterComponents.IsEmpty())
+			AKGCharacterBase* hittedActor = Cast<AKGCharacterBase>(resultTarget.GetActor());
+			if (nullptr == hittedActor)
 			{
 				continue;
 			}
 
-			check(1 == characterComponents.Num()); // AKGCharacterBase는 하나이여야 한다.
-			const AKGCharacterBase* targetCharacterBaseComponent = Cast<AKGCharacterBase>(characterComponents[0]);
-
-			const KG::EAlliance targetAlliance = targetCharacterBaseComponent->GetAlliance();
-			if (false == KG::IsEnemy(GetAlliance(), targetAlliance))
+			const EAlliance targetAlliance = hittedActor->GetAlliance();
+			if (false == IsEnemy(GetAlliance(), targetAlliance))
 			{
 				continue;
 			}

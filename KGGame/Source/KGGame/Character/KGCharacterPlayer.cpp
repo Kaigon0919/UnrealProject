@@ -63,6 +63,8 @@ void AKGCharacterPlayer::BeginPlay()
 	{
 		subSystem->AddMappingContext(inputMappingContext,0);
 	}
+
+	this->SetAlliance(EAlliance::Player);
 }
 
 void AKGCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

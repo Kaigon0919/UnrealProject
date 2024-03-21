@@ -184,6 +184,33 @@ void AKGCharacterBase::OnResetAttack()
 	isSavableAttack = false;
 }
 
+void AKGCharacterBase::OnHitAnimation()
+{
+	UAnimInstance* animInstance = GetMesh()->GetAnimInstance();
+	if (nullptr == animInstance)
+	{
+		return;
+	}
+
+	if (nullptr == hitMontage)
+	{
+		return;
+	}
+
+	// 공격중에는 애니메이션이 끈기지 않도록 합니다.
+	if (true == animInstance->Montage_IsPlaying(comboMontage))
+	{
+		return;
+	}
+
+	animInstance->Montage_Play(hitMontage, 1.0f);
+
+	// 
+	const FName nextSectionName = hitMontage->GetSectionName(HitAnimationSectionNumber::Front);
+	animInstance->Montage_JumpToSection(nextSectionName, hitMontage);
+
+}
+
 float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	if (true == isDead)
@@ -199,8 +226,14 @@ float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	{
 		OnDead();
 	}
+	else
+	{
+		OnHitAnimation();
+	}
 
 	statusComponent->SetCurrentHp(currentHp);
+
+	
 
 	return DamageAmount;
 }

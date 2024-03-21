@@ -10,6 +10,14 @@
 #include "KGCharacterBase.generated.h"
 
 
+enum HitAnimationSectionNumber
+{
+	Back = 0
+	, Front
+	, Right
+	, Left
+};
+
 UCLASS()
 class KGGAME_API AKGCharacterBase : public ACharacter , public IKGAnimationAttackInterface
 {
@@ -42,9 +50,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 	TObjectPtr<class UAnimMontage> deadMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+	TObjectPtr<class UAnimMontage> hitMontage;
+
 	int32 currentComboIdx = 0;
 
-protected: // TODO.CharacterBase에 넣고 공통으로 쓸 필요가 있을까? 일단 CharacterBase에 두고 상황보고 필요한곳이 한곳이면 그곳에서만 처리하도록 수정한다.
+protected:
 	void ProcessComboCommand();
 	bool IsComboAttackable();
 
@@ -58,6 +69,7 @@ protected: // TODO.CharacterBase에 넣고 공통으로 쓸 필요가 있을까?
 private:
 	void OnSaveAttack();
 	void OnResetAttack();
+	void OnHitAnimation();
 	bool isSavableAttack;
 
 // Status.

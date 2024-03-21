@@ -22,7 +22,7 @@ AKGCharacterBase::AKGCharacterBase() : waitDestroyTime(2.0f), isDead(false)
 
 	// Collision Setting.
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("KGCharacter"));
+	GetCapsuleComponent()->SetCollisionProfileName(KG_COLLISION_CAPSULE);
 
 	// Movement Setting.
 	UCharacterMovementComponent * const moveComponent = GetCharacterMovement();

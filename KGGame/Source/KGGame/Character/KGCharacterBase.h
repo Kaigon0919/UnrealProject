@@ -69,7 +69,7 @@ protected:
 private:
 	void OnSaveAttack();
 	void OnResetAttack();
-	void OnHitAnimation();
+	void PlayHitAnimation(const HitAnimationSectionNumber section);
 	bool isSavableAttack;
 
 // Status.
@@ -89,12 +89,13 @@ public:
 private:
 	FTimerHandle waitDestroyTimerHandle;
 	virtual void OnDead();
+
 	UFUNCTION()
-	virtual void OnDeadDestroy();
+	virtual void CleanupAfterDead();
 
 public:
 	bool IsDead() const { return isDead; }
-	void OnAttack() override;
+	void OnAnimationAttack() override;
 
 // Alliance
 private:
@@ -103,5 +104,5 @@ private:
 
 public:
 	const EAlliance GetAlliance() const { return alliance; }
-	void SetAlliance(EAlliance value) { alliance = value; }
+	void SetAlliance(const EAlliance value) { alliance = value; }
 };

@@ -13,7 +13,7 @@ void UAnimNotify_KGAttack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenc
 		IKGAnimationAttackInterface* attackPawn = Cast<IKGAnimationAttackInterface>(MeshComp->GetOwner());
 		if (nullptr != attackPawn)
 		{
-			attackPawn->OnAttack();
+			attackPawn->OnAnimationAttack();
 		}
 
 	}

@@ -92,9 +92,9 @@ void AKGCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void AKGCharacterBase::ActorEnable(const bool isEnable)
 {
-	SetActorTickEnabled(isEnable);
-	SetActorHiddenInGame(isEnable);
+	SetActorHiddenInGame(!isEnable);
 	SetActorEnableCollision(isEnable);
+	SetActorTickEnabled(isEnable);
 }
 
 void AKGCharacterBase::ProcessComboCommand()
@@ -184,7 +184,7 @@ void AKGCharacterBase::OnResetAttack()
 	isSavableAttack = false;
 }
 
-void AKGCharacterBase::OnHitAnimation()
+void AKGCharacterBase::PlayHitAnimation(const HitAnimationSectionNumber section)
 {
 	UAnimInstance* animInstance = GetMesh()->GetAnimInstance();
 	if (nullptr == animInstance)
@@ -227,8 +227,8 @@ float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		OnDead();
 	}
 	else
-	{
-		OnHitAnimation();
+	{	
+		PlayHitAnimation(HitAnimationSectionNumber::Front);
 	}
 
 	statusComponent->SetCurrentHp(currentHp);
@@ -257,17 +257,17 @@ void AKGCharacterBase::OnDead()
 	// Dead 몽타주가 끝나면 waitDestroyTime만큼 대기했다가 사라지도록 처리.
 	
 	float length = deadMontage->GetPlayLength();
-	GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::OnDeadDestroy, length + waitDestroyTime, false);
+	GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::CleanupAfterDead, length + waitDestroyTime, false);
 
 }
 
-void AKGCharacterBase::OnDeadDestroy()
+void AKGCharacterBase::CleanupAfterDead()
 {
 	GetWorldTimerManager().ClearTimer(waitDestroyTimerHandle);
 	this->ActorEnable(false);
 }
 
-void AKGCharacterBase::OnAttack()
+void AKGCharacterBase::OnAnimationAttack()
 {
 	TArray<FHitResult> results;
 	FCollisionQueryParams params(SCENE_QUERY_STAT(Attack), false, this);

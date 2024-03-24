@@ -254,7 +254,6 @@ void AKGCharacterBase::OnDead()
 	}
 
 	animInstance->Montage_Play(deadMontage, 1.0f);
-	// Dead 몽타주가 끝나면 waitDestroyTime만큼 대기했다가 사라지도록 처리.
 	
 	float length = deadMontage->GetPlayLength();
 	GetWorldTimerManager().SetTimer(waitDestroyTimerHandle, this, &AKGCharacterBase::CleanupAfterDead, length + waitDestroyTime, false);
@@ -272,7 +271,7 @@ void AKGCharacterBase::OnAnimationAttack()
 	TArray<FHitResult> results;
 	FCollisionQueryParams params(SCENE_QUERY_STAT(Attack), false, this);
 
-	// 추후 캐릭별, 스킬별로 세팅할때 수정하도록 예정
+	// TODO. 추후 캐릭별, 스킬별로 세팅할때 수정하도록 예정
 	const float attackRange = 150.0f;
 	const float attackRadius = 50.0f;
 

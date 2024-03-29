@@ -5,7 +5,7 @@
 #include "GameFrameWork/Character.h"
 #include "GameFrameWork/CharacterMovementComponent.h"
 
-UKGAnimInstance::UKGAnimInstance() : movingThreshould(3.0f), jumpingThreshould(100.0f)
+UKGAnimInstance::UKGAnimInstance() : movingThreshould(3.0f), jumpingThreshould(100.0f), isWalk(false)
 {
 }
 
@@ -18,7 +18,6 @@ void UKGAnimInstance::NativeInitializeAnimation()
 	{
 		movementComponent = owner->GetCharacterMovement();
 	}
-
 }
 
 void UKGAnimInstance::NativeUpdateAnimation(float DeltaSeconds)

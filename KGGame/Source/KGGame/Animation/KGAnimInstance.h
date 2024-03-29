@@ -49,6 +49,9 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = "true"))
 	uint8 isJumping : 1;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character, Meta = (AllowPrivateAccess = "true"))
+	uint8 isWalk : 1;
+
 public:
 	FOnSaveAttackDelegate saveAttackDelegate;
 	FOnResetComboDelegate resetComboDelegate;
@@ -58,4 +61,7 @@ private:
 	void AnimNotify_SaveAttack();
 	UFUNCTION()
 	void AnimNotify_ResetCombo();
+
+public:
+	void SetWalk(const bool value) { isWalk = value; }
 };

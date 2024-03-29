@@ -62,7 +62,7 @@ void AKGCharacterBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	UKGAnimInstance* animInstance = CastChecked<UKGAnimInstance>(GetMesh()->GetAnimInstance());
+	UKGAnimInstance* animInstance = Cast<UKGAnimInstance>(GetMesh()->GetAnimInstance());
 	if (nullptr != animInstance)
 	{
 		animInstance->saveAttackDelegate.AddUObject(this, &AKGCharacterBase::OnSaveAttack);

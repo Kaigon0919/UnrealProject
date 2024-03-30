@@ -24,14 +24,7 @@ private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
-	float patrolRadius;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
-	float nextPatrolMinDistance;
-
-private:
-	bool GetNextPatroPosition(const class UNavigationSystemV1* const naviSystem, const class UBlackboardComponent* const blackBoardComponent, FVector currentPosition, _Out_ FNavLocation& result) const;
+	bool GetNextPatroPosition(const class UNavigationSystemV1* const naviSystem, const class UBlackboardComponent* const blackBoardComponent, const FVector& currentPosition, const float patrolRadius, const float patrolMinDistance, _Out_ FNavLocation& result) const;
 
 	
 };

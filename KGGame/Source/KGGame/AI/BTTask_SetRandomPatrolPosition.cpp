@@ -6,8 +6,9 @@
 #include "AIController.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include <Interface/KGCharacterAIInterface.h>
 
-UBTTask_SetRandomPatrolPosition::UBTTask_SetRandomPatrolPosition() : nextPatrolMinDistance(50)
+UBTTask_SetRandomPatrolPosition::UBTTask_SetRandomPatrolPosition()
 {
 }
 
@@ -25,6 +26,12 @@ EBTNodeResult::Type UBTTask_SetRandomPatrolPosition::ExecuteTask(UBehaviorTreeCo
 		return EBTNodeResult::Type::Failed;
 	}
 
+	const IKGCharacterAIInterface* kgCharacter = Cast<IKGCharacterAIInterface>(ownerPawn);
+	if (nullptr == kgCharacter)
+	{
+		return EBTNodeResult::Type::Failed;
+	}
+
 	const UNavigationSystemV1* const naviSystem = UNavigationSystemV1::GetNavigationSystem(ownerPawn->GetWorld());
 	if (nullptr == naviSystem)
 	{
@@ -36,20 +43,17 @@ EBTNodeResult::Type UBTTask_SetRandomPatrolPosition::ExecuteTask(UBehaviorTreeCo
 
 	const FVector currentPosition = ownerPawn->GetActorLocation();
 
-	const bool bResult = GetNextPatroPosition(naviSystem, blackBoardComponent, currentPosition, nextPatroPos);
+	const bool bResult = GetNextPatroPosition(naviSystem, blackBoardComponent, currentPosition, kgCharacter->GetAIPatrolRadius(), kgCharacter->GetAIPatrolMinDistance(), nextPatroPos);
 	if (bResult)
 	{
 		blackBoardComponent->SetValueAsVector(KG_BB_PATROLPOS, nextPatroPos.Location);
-//#if ENABLE_DRAW_DEBUG
-//		DrawDebugSphere(GetWorld(), nextPatroPos.Location, 5.0f, 360, FColor::Red, false, 10.0f);
-//#endif
 		return EBTNodeResult::Succeeded;
 	}
 
 	return EBTNodeResult::Type::Failed;
 }
 
-bool UBTTask_SetRandomPatrolPosition::GetNextPatroPosition(const UNavigationSystemV1* const naviSystem, const UBlackboardComponent* const blackBoardComponent, FVector currentPosition, _Out_ FNavLocation& nextPatroPos) const
+bool UBTTask_SetRandomPatrolPosition::GetNextPatroPosition(const UNavigationSystemV1* const naviSystem, const UBlackboardComponent* const blackBoardComponent, const FVector& currentPosition, const float patrolRadius, const float patrolMinDistance, _Out_ FNavLocation& nextPatroPos) const
 {
 	if (nullptr == blackBoardComponent)
 	{
@@ -69,7 +73,7 @@ bool UBTTask_SetRandomPatrolPosition::GetNextPatroPosition(const UNavigationSyst
 		}
 
 		const float distanceSquared = static_cast<float>(FVector::DistSquared(currentPosition, nextPatroPos.Location));
-		if (FMath::Square(nextPatrolMinDistance) < distanceSquared)
+		if (FMath::Square(patrolMinDistance) < distanceSquared)
 		{
 			return true;
 		}

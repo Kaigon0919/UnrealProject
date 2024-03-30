@@ -9,6 +9,10 @@
 /**
  * 
  */
+
+class UNavigationSystemV1;
+class UBlackboardComponent;
+
 UCLASS()
 class KGGAME_API UBTTask_SetRandomPatrolPosition : public UBTTaskNode
 {
@@ -18,4 +22,16 @@ public:
 
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
+	float patrolRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPrivateAccess = "true"))
+	float nextPatrolMinDistance;
+
+private:
+	bool GetNextPatroPosition(const class UNavigationSystemV1* const naviSystem, const class UBlackboardComponent* const blackBoardComponent, FVector currentPosition, _Out_ FNavLocation& result) const;
+
+	
 };

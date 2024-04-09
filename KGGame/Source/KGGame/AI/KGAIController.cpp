@@ -42,8 +42,6 @@ void AKGAIController::OnPossess(APawn* inPawn)
 {
 	Super::OnPossess(inPawn);
 
-	
-
 	RunAI();
 }
 

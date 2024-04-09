@@ -2,7 +2,8 @@
 
 
 #include "Character/KGNonPlayerCharacter.h"
-#include "DataAsset/KGEnemyAIDataAsset.h"
+#include "DataAsset/KGEnemyDataAsset.h"
+#include "Status/KGCharacterStatusComponent.h"
 
 AKGNonPlayerCharacter::AKGNonPlayerCharacter()
 {
@@ -46,6 +47,6 @@ float AKGNonPlayerCharacter::GetAIAttackRange() const
         return 0.0f;
     }
 
-    return aiDataAsset->attackRange;
+    return GetStatusComponent()->GetBaseAttackPower();
 }
 

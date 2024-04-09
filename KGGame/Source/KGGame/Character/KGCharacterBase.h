@@ -76,6 +76,8 @@ private:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UKGCharacterStatusComponent> statusComponent;
+public:
+	UKGCharacterStatusComponent* GetStatusComponent() const { return statusComponent.Get(); }
 
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;

@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "KGEnemyAIDataAsset.generated.h"
+#include "KGCharacterDataAsset.h"
+#include "KGEnemyDataAsset.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class KGGAME_API UKGEnemyAIDataAsset : public UPrimaryDataAsset
+class KGGAME_API UKGEnemyDataAsset : public UKGCharacterDataAsset
 {
 	GENERATED_BODY()
 public:
@@ -20,6 +21,4 @@ public:
 	float patrolMinDistance;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float detectRange;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float attackRange;
 };

@@ -7,7 +7,7 @@
 #include "Interface/KGCharacterAIInterface.h"
 #include "KGNonPlayerCharacter.generated.h"
 
-class UKGEnemyAIDataAsset;
+class UKGEnemyDataAsset;
 
 /**
  * 
@@ -21,7 +21,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ai, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UKGEnemyAIDataAsset> aiDataAsset;
+	TObjectPtr<UKGEnemyDataAsset> aiDataAsset;
 public:
 	// IKGCharacterAIInterface을(를) 통해 상속됨
 	float GetAIPatrolRadius() const override;

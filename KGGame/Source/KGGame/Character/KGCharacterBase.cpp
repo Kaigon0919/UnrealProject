@@ -278,12 +278,12 @@ void AKGCharacterBase::OnAnimationAttack()
 	const FVector start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
 	const FVector end = start + GetActorForwardVector() * attackRange;
 	
-	const float attackDamage = statusComponent->GetAttackPower();
+	const float attackDamage = statusComponent->GetBaseAttackPower();
 
 	const bool hitDetected = GetWorld()->SweepMultiByChannel(results, start, end, FQuat::Identity,KG_COLLISION_ACTION, FCollisionShape::MakeSphere(attackRadius), params);
 	if (hitDetected)
 	{
-		const float damage = statusComponent->GetAttackPower();
+		const float damage = statusComponent->GetBaseAttackPower();
 		const uint32 hitNum = results.Num();
 		for(uint32 i = 0; i < hitNum; ++i)
 		{

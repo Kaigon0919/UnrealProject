@@ -97,6 +97,11 @@ void AKGCharacterBase::ActorEnable(const bool isEnable)
 	SetActorTickEnabled(isEnable);
 }
 
+void AKGCharacterBase::SpawnInit()
+{
+	ActorEnable(true);
+}
+
 void AKGCharacterBase::ProcessComboCommand()
 {
 	if (0 == currentComboIdx && IsComboAttackable())
@@ -220,9 +225,9 @@ float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	int currentHp = statusComponent->GetCurrentHp();
-	currentHp -= DamageAmount;
-	if (currentHp <= 0)
+	int currentHP = statusComponent->GetCurrentHP();
+	currentHP -= DamageAmount;
+	if (currentHP <= 0)
 	{
 		OnDead();
 	}
@@ -231,7 +236,7 @@ float AKGCharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		PlayHitAnimation(HitAnimationSectionNumber::Front);
 	}
 
-	statusComponent->SetCurrentHp(currentHp);
+	statusComponent->SetCurrentHP(currentHP);
 
 	
 

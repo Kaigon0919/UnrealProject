@@ -7,7 +7,11 @@
 
 AKGNonPlayerCharacter::AKGNonPlayerCharacter()
 {
+}
 
+void AKGNonPlayerCharacter::BeginPlay()
+{
+    SpawnInit();
 }
 
 float AKGNonPlayerCharacter::GetAIPatrolRadius() const
@@ -43,5 +47,17 @@ float AKGNonPlayerCharacter::GetAIDetectRange() const
 float AKGNonPlayerCharacter::GetAIAttackRange() const
 {
     return GetStatusComponent()->GetBaseAttackPower();
+}
+
+void AKGNonPlayerCharacter::SpawnInit()
+{
+    Super::SpawnInit();
+    if (nullptr != aiDataAsset)
+    {
+        UKGCharacterStatusComponent* const status = GetStatusComponent(); 
+        status->SetStatusByCharacterDataAsset(aiDataAsset);
+        status->SetCurrentHP(status->GetMaxHP());
+        status->SetCurrentMP(status->GetMaxMP());
+    }
 }
 

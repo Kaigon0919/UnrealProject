@@ -15,9 +15,9 @@ class KGGAME_API UKGCharacterDataAsset : public UPrimaryDataAsset
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float baseMaxHp;
+	float baseMaxHP;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float baseMaxMp;
+	float baseMaxMP;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float baseAttackPower;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

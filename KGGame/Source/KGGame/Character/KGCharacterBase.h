@@ -41,7 +41,8 @@ public:
 
 private: // 외부 요소에서 해당 Actor을 비활성화가 필요하면 public으로 변경.
 	void ActorEnable(const bool isEnable);
-
+protected:
+	virtual	void SpawnInit();
 // Montage. 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
@@ -73,8 +74,8 @@ private:
 	bool isSavableAttack;
 
 // Status.
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+private:
+	UPROPERTY()
 	TObjectPtr<class UKGCharacterStatusComponent> statusComponent;
 public:
 	UKGCharacterStatusComponent* GetStatusComponent() const { return statusComponent.Get(); }

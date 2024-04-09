@@ -5,10 +5,10 @@
 #include "DataAsset/KGCharacterDataAsset.h"
 
 UKGCharacterStatusComponent::UKGCharacterStatusComponent()
-	:baseMaxHp(100)
-	, currentHp(baseMaxHp)
-	, baseMaxMp(100)
-	, currentMp(baseMaxMp)
+	:baseMaxHP(100)
+	, currentHP(baseMaxHP)
+	, baseMaxMP(100)
+	, currentMP(baseMaxMP)
 	, baseAttackPower(0)
 	, baseAttackRange(0)
 {
@@ -23,31 +23,35 @@ void UKGCharacterStatusComponent::BeginPlay()
 
 void UKGCharacterStatusComponent::SetBaseMaxHp( int32 value )
 {
-	baseMaxHp = FMath::Clamp( value , 0 , value );
+	baseMaxHP = FMath::Clamp( value , 0 , value );
+
+	maxHP.SetBaseValue(baseMaxHP);
 }
 
-void UKGCharacterStatusComponent::SetCurrentHp( int32 value )
+void UKGCharacterStatusComponent::SetCurrentHP( int32 value )
 {
-	currentHp = FMath::Clamp(value, 0, baseMaxHp);
+	currentHP = FMath::Clamp(value, 0, GetMaxHP());
 }
 
 void UKGCharacterStatusComponent::SetBaseMaxMp(int32 value)
 {
-	baseMaxMp = FMath::Clamp(value, 0, value);
+	baseMaxMP = FMath::Clamp(value, 0, value);
+
+	maxMP.SetBaseValue(baseMaxMP);
 }
 
-void UKGCharacterStatusComponent::SetCurrentMp(int32 value)
+void UKGCharacterStatusComponent::SetCurrentMP(int32 value)
 {
-	currentMp = FMath::Clamp(value, 0, baseMaxMp);
+	currentMP = FMath::Clamp(value, 0, GetMaxMP());
 }
 
 void UKGCharacterStatusComponent::SetStatusByCharacterDataAsset(const UKGCharacterDataAsset* const dataAsset)
 {
-	SetBaseMaxHp(dataAsset->baseMaxHp);
-	SetBaseMaxMp(dataAsset->baseMaxMp);
+	SetBaseMaxHp(dataAsset->baseMaxHP);
+	SetBaseMaxMp(dataAsset->baseMaxMP);
 	SetBaseAttackPower(dataAsset->baseAttackPower);
 	SetBaseAttackRange(dataAsset->baseAttackRange);
 
-	//SetCurrentHp(dataAsset->baseMaxHp);
-	//SetCurrentMp(dataAsset->baseMaxMp);
+	//SetCurrentHP(dataAsset->baseMaxHP);
+	//SetCurrentMP(dataAsset->baseMaxMP);
 }

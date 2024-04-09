@@ -18,7 +18,8 @@ class KGGAME_API AKGNonPlayerCharacter : public AKGCharacterBase, public IKGChar
 	GENERATED_BODY()
 public:
 	AKGNonPlayerCharacter();
-
+protected:
+	virtual void BeginPlay() override;
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ai, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UKGEnemyDataAsset> aiDataAsset;
@@ -28,4 +29,6 @@ public:
 	float GetAIPatrolMinDistance() const override;
 	float GetAIDetectRange() const override;
 	float GetAIAttackRange() const override;
+private:
+	virtual	void SpawnInit() override;
 };

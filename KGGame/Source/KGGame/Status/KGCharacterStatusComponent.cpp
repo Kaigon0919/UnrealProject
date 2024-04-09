@@ -9,7 +9,8 @@ UKGCharacterStatusComponent::UKGCharacterStatusComponent()
 	, currentHp(baseMaxHp)
 	, baseMaxMp(100)
 	, currentMp(baseMaxMp)
-	, baseAttackPower(10)
+	, baseAttackPower(0)
+	, baseAttackRange(0)
 {
 }
 

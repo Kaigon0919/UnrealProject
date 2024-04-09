@@ -42,11 +42,6 @@ float AKGNonPlayerCharacter::GetAIDetectRange() const
 
 float AKGNonPlayerCharacter::GetAIAttackRange() const
 {
-    if (nullptr == aiDataAsset)
-    {
-        return 0.0f;
-    }
-
     return GetStatusComponent()->GetBaseAttackPower();
 }
 

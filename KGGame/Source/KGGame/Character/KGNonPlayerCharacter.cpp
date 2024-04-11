@@ -4,9 +4,12 @@
 #include "Character/KGNonPlayerCharacter.h"
 #include "DataAsset/KGEnemyDataAsset.h"
 #include "Status/KGCharacterStatusComponent.h"
+#include "AI/KGAIController.h"
 
 AKGNonPlayerCharacter::AKGNonPlayerCharacter()
 {
+    AIControllerClass = AKGAIController::StaticClass();
+    AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AKGNonPlayerCharacter::BeginPlay()

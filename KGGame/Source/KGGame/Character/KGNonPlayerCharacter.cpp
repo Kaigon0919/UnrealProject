@@ -8,7 +8,12 @@
 
 AKGNonPlayerCharacter::AKGNonPlayerCharacter()
 {
-    AIControllerClass = AKGAIController::StaticClass();
+    const static ConstructorHelpers::FClassFinder<AController> aiControllerRef(TEXT("/Script/Engine.Blueprint'/Game/KGGame/AI/BP_KGAIController.BP_KGAIController_C'"));
+    if (nullptr != aiControllerRef.Class)
+    {
+        AIControllerClass = aiControllerRef.Class;
+    }
+
     AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 

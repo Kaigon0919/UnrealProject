@@ -14,6 +14,7 @@ AKGNonPlayerCharacter::AKGNonPlayerCharacter()
 
 void AKGNonPlayerCharacter::BeginPlay()
 {
+    Super::BeginPlay();
     SpawnInit();
 }
 

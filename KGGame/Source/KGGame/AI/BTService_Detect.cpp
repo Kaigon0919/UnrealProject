@@ -63,4 +63,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			return;
 		}
 	}
+
+	OwnerComp.GetBlackboardComponent()->SetValueAsObject(KG_BB_TARGET, nullptr);
 }

@@ -66,7 +66,7 @@ void AKGCharacterBase::PostInitializeComponents()
 	if (nullptr != animInstance)
 	{
 		animInstance->saveAttackDelegate.AddUObject(this, &AKGCharacterBase::OnSaveAttack);
-		animInstance->saveAttackDelegate.AddUObject(this, &AKGCharacterBase::OnResetAttack);
+		animInstance->resetComboDelegate.AddUObject(this, &AKGCharacterBase::OnResetAttack);
 	}
 }
 

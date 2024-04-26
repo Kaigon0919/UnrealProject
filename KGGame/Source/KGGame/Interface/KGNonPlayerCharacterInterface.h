@@ -6,6 +6,8 @@
 #include "UObject/Interface.h"
 #include "KGNonPlayerCharacterInterface.generated.h"
 
+DECLARE_DELEGATE(FAICharacterAttackFinished);
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UKGNonPlayerCharacterInterface : public UInterface
@@ -26,4 +28,8 @@ public:
 	virtual float GetAIPatrolMinDistance() const = 0;
 	virtual float GetAIDetectRange() const = 0;
 	virtual float GetAIAttackRange() const = 0;
+	virtual float GetAITurnSpeed() const = 0;
+
+	virtual void SetAIAttackFinished(const FAICharacterAttackFinished& dele) = 0;
+	virtual void AttackByAI() = 0;
 };

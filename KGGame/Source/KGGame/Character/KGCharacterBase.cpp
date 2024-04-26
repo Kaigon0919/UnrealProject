@@ -151,6 +151,8 @@ void AKGCharacterBase::ComboActionEnd(UAnimMontage* montage, bool isProperlyEnde
 	currentComboIdx = 0;
 	isSavableAttack = false;
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+
+	NotifyComboActionEnd();
 }
 
 void AKGCharacterBase::NextComboAttack()
@@ -177,6 +179,11 @@ void AKGCharacterBase::NextComboAttack()
 	animInstance->Montage_JumpToSection(nextSectionName, comboMontage);
 	++currentComboIdx;
 	isSavableAttack = false;
+}
+
+void AKGCharacterBase::NotifyComboActionEnd()
+{
+	__noop;
 }
 
 void AKGCharacterBase::OnSaveAttack()

@@ -2,6 +2,8 @@
 
 
 #include "AI/BTTask_KGAttack.h"
+#include "AIController.h"
+#include "Interface/KGNonPlayerCharacterInterface.h"
 
 UBTTask_KGAttack::UBTTask_KGAttack()
 {
@@ -15,6 +17,28 @@ EBTNodeResult::Type UBTTask_KGAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
         return result;
     }
 
+    APawn* const ownerPawn = OwnerComp.GetAIOwner()->GetPawn();
+    if (nullptr == ownerPawn)
+    {
+        return EBTNodeResult::Type::Failed;
+    }
 
-    return EBTNodeResult::Type();
+    IKGNonPlayerCharacterInterface* aiCharacter = Cast<IKGNonPlayerCharacterInterface>(ownerPawn);
+    if (nullptr == aiCharacter)
+    {
+        return EBTNodeResult::Type::Failed;
+    }
+
+    FAICharacterAttackFinished onAttackFinished;
+    onAttackFinished.BindLambda(
+        [&]()
+        {
+            FinishLatentTask(OwnerComp, EBTNodeResult::Type::Succeeded);
+        }
+    );
+
+    aiCharacter->SetAIAttackFinished(onAttackFinished);
+    aiCharacter->AttackByAI();
+
+    return EBTNodeResult::Type::InProgress;
 }

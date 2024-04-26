@@ -25,10 +25,18 @@ private:
 	TObjectPtr<UKGEnemyDataAsset> aiDataAsset;
 public:
 	// IKGCharacterAIInterface을(를) 통해 상속됨
-	float GetAIPatrolRadius() const override;
-	float GetAIPatrolMinDistance() const override;
-	float GetAIDetectRange() const override;
-	float GetAIAttackRange() const override;
+	virtual float GetAIPatrolRadius() const override;
+	virtual float GetAIPatrolMinDistance() const override;
+	virtual float GetAIDetectRange() const override;
+	virtual float GetAIAttackRange() const override;
+	virtual float GetAITurnSpeed() const override;
+
+	virtual void SetAIAttackFinished(const FAICharacterAttackFinished& dele) override;
+	virtual void AttackByAI() override;
+	virtual void NotifyComboActionEnd() override;
+private:
+	FAICharacterAttackFinished onAttackFinished;
+
 private:
 	virtual	void SpawnInit() override;
 };

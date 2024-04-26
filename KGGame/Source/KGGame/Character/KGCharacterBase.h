@@ -65,8 +65,8 @@ protected:
 	void ComboActionBegin();
 	UFUNCTION()
 	void ComboActionEnd(class UAnimMontage* montage, bool isProperlyEnded);
-
 	void NextComboAttack();
+	virtual void NotifyComboActionEnd();
 	
 private:
 	void OnSaveAttack();

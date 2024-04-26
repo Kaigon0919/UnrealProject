@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/KGNonPlayerCharacter.h"
@@ -55,7 +55,28 @@ float AKGNonPlayerCharacter::GetAIDetectRange() const
 
 float AKGNonPlayerCharacter::GetAIAttackRange() const
 {
-    return GetStatusComponent()->GetBaseAttackPower();
+    return GetStatusComponent()->GetAttackRange();
+}
+
+float AKGNonPlayerCharacter::GetAITurnSpeed() const
+{
+    // TODO. 임시로 하드 코딩
+    return 30.0f;
+}
+
+void AKGNonPlayerCharacter::SetAIAttackFinished(const FAICharacterAttackFinished& dele)
+{
+    onAttackFinished = dele;
+}
+
+void AKGNonPlayerCharacter::AttackByAI()
+{
+    ProcessComboCommand();
+}
+
+void AKGNonPlayerCharacter::NotifyComboActionEnd()
+{
+    onAttackFinished.ExecuteIfBound();
 }
 
 void AKGNonPlayerCharacter::SpawnInit()

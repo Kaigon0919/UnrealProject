@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/KGAnimationAttackInterface.h"
+#include "Interface/KGCharacterInterface.h"
 #include "KGAlliance.h"
 
 #include "KGCharacterBase.generated.h"
@@ -19,7 +20,7 @@ enum HitAnimationSectionNumber
 };
 
 UCLASS()
-class KGGAME_API AKGCharacterBase : public ACharacter , public IKGAnimationAttackInterface
+class KGGAME_API AKGCharacterBase : public ACharacter , public IKGAnimationAttackInterface, public IKGCharacterInterface
 {
 	GENERATED_BODY()
 
@@ -106,6 +107,6 @@ private:
 	EAlliance alliance;
 
 public:
-	const EAlliance GetAlliance() const { return alliance; }
+	virtual const EAlliance GetAlliance() const override { return alliance; } ;
 	void SetAlliance(const EAlliance value) { alliance = value; }
 };

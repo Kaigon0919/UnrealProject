@@ -6,7 +6,7 @@
 #include "AIController.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include <Interface/KGCharacterAIInterface.h>
+#include <Interface/KGNonPlayerCharacterInterface.h>
 
 UBTTask_SetRandomPatrolPosition::UBTTask_SetRandomPatrolPosition()
 {
@@ -26,7 +26,7 @@ EBTNodeResult::Type UBTTask_SetRandomPatrolPosition::ExecuteTask(UBehaviorTreeCo
 		return EBTNodeResult::Type::Failed;
 	}
 
-	const IKGCharacterAIInterface* kgCharacter = Cast<IKGCharacterAIInterface>(ownerPawn);
+	const IKGNonPlayerCharacterInterface* kgCharacter = Cast<IKGNonPlayerCharacterInterface>(ownerPawn);
 	if (nullptr == kgCharacter)
 	{
 		return EBTNodeResult::Type::Failed;

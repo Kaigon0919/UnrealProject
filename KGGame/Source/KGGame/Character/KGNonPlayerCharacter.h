@@ -1,10 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Character/KGCharacterBase.h"
-#include "Interface/KGCharacterAIInterface.h"
+#include "Interface/KGNonPlayerCharacterInterface.h"
 #include "KGNonPlayerCharacter.generated.h"
 
 class UKGEnemyDataAsset;
@@ -13,7 +13,7 @@ class UKGEnemyDataAsset;
  * 
  */
 UCLASS()
-class KGGAME_API AKGNonPlayerCharacter : public AKGCharacterBase, public IKGCharacterAIInterface
+class KGGAME_API AKGNonPlayerCharacter : public AKGCharacterBase, public IKGNonPlayerCharacterInterface
 {
 	GENERATED_BODY()
 public:
@@ -24,7 +24,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ai, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UKGEnemyDataAsset> aiDataAsset;
 public:
-	// IKGCharacterAIInterface¿ª(∏¶) ≈Î«ÿ ªÛº”µ 
+	// IKGCharacterAIInterfaceÏùÑ(Î•º) ÌÜµÌï¥ ÏÉÅÏÜçÎê®
 	float GetAIPatrolRadius() const override;
 	float GetAIPatrolMinDistance() const override;
 	float GetAIDetectRange() const override;

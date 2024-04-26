@@ -1,12 +1,14 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "AI/BTService_Detect.h"
 #include "AIController.h"
-#include <Interface/KGCharacterAIInterface.h>
+#include <Interface/KGNonPlayerCharacterInterface.h>
 #include <Collision/KGCollisionProfiles.h>
 #include <BehaviorTree/BlackboardComponent.h>
 #include "AI/KGBlackBoardKeys.h"
+#include "Interface/KGCharacterInterface.h"
+#include "Character/KGAlliance.h"
 
 UBTService_Detect::UBTService_Detect()
 {
@@ -24,8 +26,14 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		return;
 	}
 
-	const IKGCharacterAIInterface* const onwerCharacter= Cast<IKGCharacterAIInterface>(ownerPawn);
-	if (nullptr == onwerCharacter)
+	const IKGCharacterInterface* const ownerCharacter = Cast<IKGCharacterInterface>(ownerPawn);
+	if (nullptr == ownerCharacter)
+	{
+		return;
+	}
+
+	const IKGNonPlayerCharacterInterface* const onwerNpc= Cast<IKGNonPlayerCharacterInterface>(ownerPawn);
+	if (nullptr == onwerNpc)
 	{
 		return;
 	}
@@ -36,8 +44,12 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		return;
 	}
 
+	const EAlliance desAliance = ownerCharacter->GetAlliance();
 	const FVector currentPosition = ownerPawn->GetActorLocation();
-	const float detectRange = onwerCharacter->GetAIDetectRange();
+	const float detectRange = onwerNpc->GetAIDetectRange();
+
+	// 임시로 가까운 대상으로 처리한다. 여러 조건으로 공격 대상이 필요하면 수정하자.
+	float minDistance = TNumericLimits<float>::Max();
 
 	TArray<FOverlapResult> overlapResults;
 	FCollisionQueryParams params(SCENE_QUERY_STAT(Detect), false, ownerPawn);
@@ -48,16 +60,30 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		const uint32 hitNum = overlapResults.Num();
 		for (uint32 i = 0; i < hitNum; ++i)
 		{
-			APawn* const targetPawn = Cast<APawn>(overlapResults[i].GetActor());
+			IKGCharacterInterface* const targetCharacter = Cast<IKGCharacterInterface>(overlapResults[i].GetActor());
+			if (nullptr == targetCharacter)
+			{
+				continue;
+			}
+			
+			if (false == IsEnemy(desAliance, targetCharacter->GetAlliance()))
+			{
+				continue;
+			}
+
+			APawn* const targetPawn = Cast<APawn>(targetCharacter);
 			if (nullptr == targetPawn)
 			{
 				continue;
 			}
 
-			if (false == targetPawn->GetController()->IsPlayerController())
+			const float distance = FVector::Distance(targetPawn->GetActorLocation(), currentPosition);
+			if (minDistance < distance)
 			{
 				continue;
 			}
+
+			minDistance = distance;
 
 			OwnerComp.GetBlackboardComponent()->SetValueAsObject(KG_BB_TARGET, targetPawn);
 			return;

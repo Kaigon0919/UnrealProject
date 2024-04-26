@@ -4,11 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "KGCharacterAIInterface.generated.h"
+#include <Character/KGAlliance.h>
+#include "KGCharacterInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UKGCharacterAIInterface : public UInterface
+class UKGCharacterInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,14 +17,11 @@ class UKGCharacterAIInterface : public UInterface
 /**
  * 
  */
-class KGGAME_API IKGCharacterAIInterface
+class KGGAME_API IKGCharacterInterface
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual float GetAIPatrolRadius() const = 0;
-	virtual float GetAIPatrolMinDistance() const = 0;
-	virtual float GetAIDetectRange() const = 0;
-	virtual float GetAIAttackRange() const = 0;
+	virtual const EAlliance GetAlliance() const = 0;
 };

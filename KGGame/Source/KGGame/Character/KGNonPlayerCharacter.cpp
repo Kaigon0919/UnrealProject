@@ -64,6 +64,11 @@ float AKGNonPlayerCharacter::GetAITurnSpeed() const
     return 30.0f;
 }
 
+float AKGNonPlayerCharacter::GetAIAttackRadius() const
+{
+    return GetStatusComponent()->GetAttackRadius();
+}
+
 void AKGNonPlayerCharacter::SetAIAttackFinished(const FAICharacterAttackFinished& dele)
 {
     onAttackFinished = dele;
@@ -86,8 +91,7 @@ void AKGNonPlayerCharacter::SpawnInit()
     {
         UKGCharacterStatusComponent* const status = GetStatusComponent(); 
         status->SetStatusByCharacterDataAsset(aiDataAsset);
-        status->SetCurrentHP(status->GetMaxHP());
-        status->SetCurrentMP(status->GetMaxMP());
+        this->Resurrect(1.f, 1.f);
     }
 }
 

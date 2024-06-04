@@ -217,7 +217,6 @@ void AKGCharacterBase::PlayHitAnimation(const HitAnimationSectionNumber section)
 
 	animInstance->Montage_Play(hitMontage, 1.0f);
 
-	// 
 	const FName nextSectionName = hitMontage->GetSectionName(HitAnimationSectionNumber::Front);
 	animInstance->Montage_JumpToSection(nextSectionName, hitMontage);
 
@@ -272,6 +271,12 @@ void AKGCharacterBase::OnDead()
 
 }
 
+void AKGCharacterBase::Resurrect(const float resurrectHpRatio, const float resurrectMpRatio)
+{
+	statusComponent->SetCurrentHP(statusComponent->GetMaxHP() * resurrectHpRatio);
+	statusComponent->SetCurrentMP(statusComponent->GetMaxMP() * resurrectMpRatio);
+}
+
 void AKGCharacterBase::CleanupAfterDead()
 {
 	GetWorldTimerManager().ClearTimer(waitDestroyTimerHandle);
@@ -283,9 +288,8 @@ void AKGCharacterBase::OnAnimationAttack()
 	TArray<FHitResult> results;
 	FCollisionQueryParams params(SCENE_QUERY_STAT(Attack), false, this);
 
-	// TODO. 추후 캐릭별, 스킬별로 세팅할때 수정하도록 예정
-	const float attackRange = 150.0f;
-	const float attackRadius = 50.0f;
+	const float attackRange = GetStatusComponent()->GetAttackRange();
+	const float attackRadius = GetStatusComponent()->GetAttackRadius();
 
 	const FVector start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();
 	const FVector end = start + GetActorForwardVector() * attackRange;

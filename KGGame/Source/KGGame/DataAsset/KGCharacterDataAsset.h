@@ -22,4 +22,6 @@ public:
 	float baseAttackPower;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float baseAttackRange;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float baseAttackRadius;
 };

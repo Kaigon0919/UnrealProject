@@ -29,6 +29,7 @@ public:
 	virtual float GetAIDetectRange() const = 0;
 	virtual float GetAIAttackRange() const = 0;
 	virtual float GetAITurnSpeed() const = 0;
+	virtual float GetAIAttackRadius() const = 0;
 
 	virtual void SetAIAttackFinished(const FAICharacterAttackFinished& dele) = 0;
 	virtual void AttackByAI() = 0;

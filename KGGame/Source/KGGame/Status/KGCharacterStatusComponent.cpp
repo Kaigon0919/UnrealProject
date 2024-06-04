@@ -11,6 +11,7 @@ UKGCharacterStatusComponent::UKGCharacterStatusComponent()
 	, currentMP(baseMaxMP)
 	, baseAttackPower(0)
 	, baseAttackRange(0)
+	, baseAttackRadius(0)
 {
 }
 
@@ -51,7 +52,5 @@ void UKGCharacterStatusComponent::SetStatusByCharacterDataAsset(const UKGCharact
 	SetBaseMaxMp(dataAsset->baseMaxMP);
 	SetBaseAttackPower(dataAsset->baseAttackPower);
 	SetBaseAttackRange(dataAsset->baseAttackRange);
-
-	//SetCurrentHP(dataAsset->baseMaxHP);
-	//SetCurrentMP(dataAsset->baseMaxMP);
+	SetBaseAttackRadius(dataAsset->baseAttackRadius);
 }

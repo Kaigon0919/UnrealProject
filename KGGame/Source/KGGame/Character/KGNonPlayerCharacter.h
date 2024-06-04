@@ -30,6 +30,7 @@ public:
 	virtual float GetAIDetectRange() const override;
 	virtual float GetAIAttackRange() const override;
 	virtual float GetAITurnSpeed() const override;
+	virtual float GetAIAttackRadius() const override;
 
 	virtual void SetAIAttackFinished(const FAICharacterAttackFinished& dele) override;
 	virtual void AttackByAI() override;

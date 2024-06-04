@@ -7,6 +7,8 @@
 #include "InputActionValue.h"
 #include "KGCharacterPlayer.generated.h"
 
+class UKGCharacterDataAsset;
+
 /**
  *
  */
@@ -46,6 +48,9 @@ private: // Input.
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> attackAction;
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ai, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UKGCharacterDataAsset> aiDataAsset;
 
 private: // Input Action Function.
 	void Move(const FInputActionValue& value);

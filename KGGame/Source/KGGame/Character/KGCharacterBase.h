@@ -94,12 +94,14 @@ private:
 	FTimerHandle waitDestroyTimerHandle;
 	virtual void OnDead();
 
+
 	UFUNCTION()
 	virtual void CleanupAfterDead();
 
 public:
 	bool IsDead() const { return isDead; }
 	void OnAnimationAttack() override;
+	void Resurrect(const float resurrectHpPercent, const float resurrectMpPercent);
 
 // Alliance
 private:

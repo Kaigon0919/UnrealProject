@@ -24,6 +24,7 @@ public:
 	void SetBaseMaxMp(const int32 value);
 	void SetBaseAttackPower(const float value) { baseAttackPower = value; attackPower.SetBaseValue(baseAttackPower); }
 	void SetBaseAttackRange(const float value) { baseAttackRange = value; attackRange.SetBaseValue(baseAttackRange); }
+	void SetBaseAttackRadius(const float value) { baseAttackRadius = value; attackRadius.SetBaseValue(baseAttackRadius); }
 
 	void SetCurrentHP(const int32 value );
 	void SetCurrentMP(const int32 value);
@@ -39,6 +40,7 @@ public:
 	const int32 GetMaxMP()/*const*/ { return maxMP.Get(); }
 	const float GetAttackPower()/*const*/ { return attackPower.Get(); }
 	const float GetAttackRange()/*const*/ { return attackRange.Get(); }
+	const float GetAttackRadius() { return attackRadius.Get(); }
 
 
 public:
@@ -63,9 +65,14 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
 	float baseAttackRange;
 
+	UPROPERTY(VisibleInstanceOnly, Meta = (AllowPrivateAccess = "true"))
+	float baseAttackRadius;
+
+
 	KGStatCalculate maxHP;
 	KGStatCalculate maxMP;
 	KGStatCalculate attackPower;
 	KGStatCalculate attackRange;
+	KGStatCalculate attackRadius;
 
 };

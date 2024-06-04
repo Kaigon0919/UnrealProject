@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/KGCharacterPlayer.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Character/KGCharacterPlayer.h"
+#include "DataAsset/KGCharacterDataAsset.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "InputMappingContext.h"
+#include "Status/KGCharacterStatusComponent.h"
 #include <EnhancedInputSubsystems.h>
 
 AKGCharacterPlayer::AKGCharacterPlayer()
@@ -65,6 +67,13 @@ void AKGCharacterPlayer::BeginPlay()
 	}
 
 	this->SetAlliance(EAlliance::Player);
+
+	if (nullptr != aiDataAsset)
+	{
+		UKGCharacterStatusComponent* const status = GetStatusComponent();
+		status->SetStatusByCharacterDataAsset(aiDataAsset);
+		this->Resurrect(1.0f, 1.f);
+	}
 }
 
 void AKGCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

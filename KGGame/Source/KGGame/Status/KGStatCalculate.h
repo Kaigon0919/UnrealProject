@@ -19,11 +19,17 @@ private:
 public:
 	KGStatCalculate();
 public:
-	float Get() { if (false == isComplateCalculate) Calc(); return calculatedValue; };
+	float Get() 
+	{ 
+		if (false == isComplateCalculate)
+		{
+			Calc();
+		}
+		return calculatedValue; 
+	};
 	void SetBaseValue(const float value);
 private:
 	void Calc();
 	void AddModifyValue(const CalculateType calcType, const float value);
-
 
 };

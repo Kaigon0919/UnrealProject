@@ -84,13 +84,14 @@ void AKGCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 	enhancedInput->BindAction(jumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 	enhancedInput->BindAction(jumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	enhancedInput->BindAction(moveAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Move);
-	enhancedInput->BindAction(lookAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Look);
-	enhancedInput->BindAction(attackAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::Attack);
+	enhancedInput->BindAction(moveAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::MoveAction);
+	enhancedInput->BindAction(lookAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::LookAction);
+	enhancedInput->BindAction(attackAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::AttackAction);
+	enhancedInput->BindAction(avoidAction, ETriggerEvent::Triggered, this, &AKGCharacterPlayer::AvoidAction);
 
 }
 
-void AKGCharacterPlayer::Move(const FInputActionValue& value)
+void AKGCharacterPlayer::MoveAction(const FInputActionValue& value)
 {
 	FVector2D moveVector = value.Get<FVector2D>();
 
@@ -104,7 +105,7 @@ void AKGCharacterPlayer::Move(const FInputActionValue& value)
 	AddMovementInput(rightDir, moveVector.X);
 }
 
-void AKGCharacterPlayer::Look(const FInputActionValue& value)
+void AKGCharacterPlayer::LookAction(const FInputActionValue& value)
 {
 	FVector2D lookVector = value.Get<FVector2D>();
 
@@ -112,7 +113,12 @@ void AKGCharacterPlayer::Look(const FInputActionValue& value)
 	AddControllerPitchInput(lookVector.Y);
 }
 
-void AKGCharacterPlayer::Attack()
+void AKGCharacterPlayer::AttackAction()
 {
 	Super::ProcessComboCommand();
+}
+
+void AKGCharacterPlayer::AvoidAction()
+{
+
 }

@@ -48,13 +48,17 @@ private: // Input.
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> attackAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> avoidAction;
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ai, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UKGCharacterDataAsset> aiDataAsset;
 
 private: // Input Action Function.
-	void Move(const FInputActionValue& value);
-	void Look(const FInputActionValue& value);
-	void Attack();
+	void MoveAction(const FInputActionValue& value);
+	void LookAction(const FInputActionValue& value);
+	void AttackAction();
+	void AvoidAction();
 
 };

@@ -8,6 +8,8 @@
 #include "KGCharacterStatusComponent.generated.h"
 
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnChangedHPDelegate, int32, int32);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class KGGAME_API UKGCharacterStatusComponent : public UActorComponent
 {
@@ -20,7 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	void SetBaseMaxHp(const int32 value );
+	void SetBaseMaxHp(const int32 value);
 	void SetBaseMaxMp(const int32 value);
 	void SetBaseAttackPower(const float value) { baseAttackPower = value; attackPower.SetBaseValue(baseAttackPower); }
 	void SetBaseAttackRange(const float value) { baseAttackRange = value; attackRange.SetBaseValue(baseAttackRange); }
@@ -74,5 +76,6 @@ private:
 	KGStatCalculate attackPower;
 	KGStatCalculate attackRange;
 	KGStatCalculate attackRadius;
-
+public:
+	FOnChangedHPDelegate onChnagedHPDelegate;
 };

@@ -16,7 +16,6 @@ UKGCharacterStatusComponent::UKGCharacterStatusComponent()
 }
 
 
-// Called when the game starts
 void UKGCharacterStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -27,11 +26,15 @@ void UKGCharacterStatusComponent::SetBaseMaxHp( int32 value )
 	baseMaxHP = FMath::Clamp( value , 0 , value );
 
 	maxHP.SetBaseValue(baseMaxHP);
+
+	onChnagedHPDelegate.Broadcast(currentHP, maxHP.Get());
 }
 
 void UKGCharacterStatusComponent::SetCurrentHP( int32 value )
 {
 	currentHP = FMath::Clamp(value, 0, GetMaxHP());
+
+	onChnagedHPDelegate.Broadcast(currentHP, maxHP.Get());
 }
 
 void UKGCharacterStatusComponent::SetBaseMaxMp(int32 value)

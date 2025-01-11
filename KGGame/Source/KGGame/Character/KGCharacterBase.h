@@ -10,7 +10,6 @@
 
 #include "KGCharacterBase.generated.h"
 
-
 enum HitAnimationSectionNumber
 {
 	Back = 0
